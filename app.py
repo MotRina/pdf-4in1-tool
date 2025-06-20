@@ -41,7 +41,7 @@ def combine_pdf_pages_4up_direct(input_pdf_path, output_pdf_path):
 
     dst_doc.save(output_pdf_path)
 
-st.title("PDF 4アップ結合ツール")
+st.title("4ページを1ページに結合するツール")
 
 uploaded_file = st.file_uploader("PDFファイルをアップロード", type=["pdf"])
 if uploaded_file:
@@ -53,7 +53,7 @@ if uploaded_file:
     combine_pdf_pages_4up_direct(temp_in_path, output_path)
 
     with open(output_path, "rb") as f:
-        st.download_button("4アップPDFをダウンロード", f, file_name="output_4up.pdf")
+        st.download_button("結合済みのPDFをダウンロード", f, file_name="output.pdf")
 
     os.remove(temp_in_path)
     os.remove(output_path)
