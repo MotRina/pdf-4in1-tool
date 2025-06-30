@@ -2,7 +2,6 @@ import streamlit as st
 import fitz
 import tempfile
 import os
-import base64
 
 def combine_pdf_pages_4up_direct(input_pdf_path, output_pdf_path):
     src_doc = fitz.open(input_pdf_path)
@@ -44,16 +43,12 @@ if uploaded_file:
     combine_pdf_pages_4up_direct(temp_in_path, output_path)
 
     with open(output_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode()
-
-    href = f'''
-        <a id="dl" href="data:application/pdf;base64,{base64_pdf}" download="output.pdf"></a>
-        <script>
-            document.getElementById("dl").click();
-        </script>
-    '''
-    st.markdown("PDF生成完了。ダウンロードが自動で始まらない場合は以下をクリック：")
-    st.markdown(href, unsafe_allow_html=True)
+        st.download_button(
+            label="生成されたPDFをダウンロード",
+            data=f,
+            file_name="output_4up.pdf",
+            mime="application/pdf"
+        )
 
     os.remove(temp_in_path)
     os.remove(output_path)
